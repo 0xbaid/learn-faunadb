@@ -7,7 +7,21 @@ require('dotenv').config();
     secret: process.env.FAUNADB_SERVER_SECRET,
   });
   try {
-    const result = await client.query();
+    const result = await client.query(
+      q.Map(
+        [
+          'Gatsby.js generates static and dynamic websites',
+          'FaunaDB is consistent',
+          'Netlify deploys static assets on the Edge',
+        ],
+        q.Lambda(
+          'post_title',
+          q.Create(q.Collection('posts'), {
+            data: { title: q.Var('post_title') },
+          })
+        )
+      )
+    );
     console.log(result);
   } catch (error) {
     if (
