@@ -1,9 +1,10 @@
 const faunadb = require('faunadb');
 const q = faunadb.query;
+require('dotenv').config();
 
 (async () => {
   const client = new faunadb.Client({
-    secret: 'fnAEDoH5ooACAZDHaYjpx48haqa1dpvS3VL_4VtZ',
+    secret: process.env.FAUNADB_SERVER_SECRET,
   });
   try {
     const result = await client.query(
